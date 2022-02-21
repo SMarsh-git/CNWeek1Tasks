@@ -66,6 +66,8 @@ const coffeeShop = {
     }
     
     console.log(coffeeShop.myOrder(coffeeShop.drink[1],coffeeShop.food[1],coffeeShop.drinkCost[1],coffeeShop.foodCost[1]));
+//  MAIN ISSUE IS THE USE OF INDEX POSITIONS RATHER THAN ITEM NAMES //
+
 
 // GARY SOLUTION //
 let foodAmount = 0;
@@ -179,3 +181,52 @@ coffeeShop.drinksWithPrices.map(drinktot => drinktot.price);
     console.log(foodTotal);
 }
 
+// MYLES SOLUTION EDITED //
+const coffeeShop = {
+    branch: 'Merseyside',
+  
+    drinks: {
+      americano: 1.99,
+      latte: 2.49,
+      capuccino: 1.99,
+    },
+  
+    food: {
+      scone: 0.99,
+      sandwich: 1.49,
+      cookie: 3,
+    },
+  
+    drinksOrdered(...drinks) {
+      let cost = 0;
+      const drinksStr = drinks.join(' & ');
+      drinks.forEach(drink => (cost += this.drinks[drink]));
+      cost = cost.toString().split('.');
+      cost[1] = cost[1].padEnd(2, '0');
+      cost = cost.join('.');
+  
+      return this.displayOrder(drinksStr, cost);
+    },
+  
+    foodOrdered(...food) {
+      let cost = 0;
+      const foodStr = food.join(' & ');
+  
+      food.forEach(item => (cost += this.food[item]));
+  
+      cost = cost.toString().split('.');
+      cost[1] = cost[1].padEnd(2, '0');
+      cost = cost.join('.');
+  
+      return this.displayOrder(foodStr, cost);
+    },
+  
+    displayOrder(order, cost) {
+      return console.log(
+        `You have ordered a ${order}, your total cost is £${cost}.`
+      );
+    },
+  };
+  
+  coffeeShop.drinksOrdered('latte', 'capuccino');
+  coffeeShop.foodOrdered('scone', 'cookie');
